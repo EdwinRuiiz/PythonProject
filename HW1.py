@@ -69,6 +69,7 @@ def search_and_replace():
 search_and_replace()
 
 # Step 2.3: Write the modified dataset to a new file
+#converts data to numeric without deprecated errors
 def safe_convert(column):
     try:
         return pd.to_numeric(column)
@@ -101,7 +102,7 @@ df = pd.read_excel(file_path, sheet_name=sheet_name)
 
 # Filters numeric columns
 numeric_df = df.select_dtypes(include=['number'])
-
+#Displays dataset information
 print(f"\nThe length (rows) of dataset in {sheet_name}: {len(df)}\n")
 
 mean_values = numeric_df.mean()
@@ -140,6 +141,7 @@ df_selected= pd.read_excel(file_path, sheet_name=sheet_name)
 # Filter numeric columns
 numeric_df = df.select_dtypes(include=['number'])
 print(f"\nThe length (rows) of dataset in {sheet_name}: {len(df_selected)}\n")
+#Finds and prints the min/max values for each column
 for col_index, col_name in enumerate(numeric_df.columns):
     min_values = df_selected.nsmallest(5, col_name)[col_name].tolist()
     max_values = df_selected.nlargest(5, col_name)[col_name].tolist()
@@ -153,13 +155,14 @@ print("\nProcess finished with exit code 0.")
 
 numeric_df = df.select_dtypes(include=['number']).iloc[:, :4]
 columns = numeric_df.columns
-
+#Defines different markers for species categories
 markers = ['.','.','.' ]
 species_list = df["Species"].unique()
-
+# Pairs for scatter plots
 pairs = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
 plt.figure(figsize=(12, 10))
 
+#Generates scatter plot
 for i,(col1,col2) in enumerate(pairs,1):
     plt.subplot(3,2,i)
 
